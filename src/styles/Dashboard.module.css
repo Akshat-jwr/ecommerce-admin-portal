@@ -1,0 +1,50 @@
+.dashboardContainer {
+  padding: 16px 0;
+}
+
+.statsContainer {
+  margin-bottom: 24px !important;
+}
+
+.statsCard {
+  border-radius: 10px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  transition: transform 0.3s ease;
+  height: 100%;
+}
+
+.statsCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.cardTitle {
+  color: #777;
+  font-weight: 500 !important;
+  margin-bottom: 8px !important;
+}
+
+.cardValue {
+  font-weight: 700 !important;
+  color: #333;
+}
+
+.iconContainer {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chartContainer {
+  margin-top: 8px !important;
+}
+
+.chartPaper {
+  padding: 24px;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  height: 100%;
+}

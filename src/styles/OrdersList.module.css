@@ -1,0 +1,37 @@
+.ordersContainer {
+  padding: 16px 0;
+}
+
+.orderIdCell {
+  font-family: monospace;
+  font-weight: 600;
+}
+
+.statusCell {
+  width: 120px;
+}
+
+.searchFilters {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.actionsCell {
+  display: flex;
+  gap: 8px;
+}
+
+.tableContainer {
+  border-radius: 8px !important;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+.filterBox {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+} 

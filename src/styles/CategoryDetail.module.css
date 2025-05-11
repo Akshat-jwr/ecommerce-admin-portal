@@ -1,0 +1,38 @@
+.categoryDetailContainer {
+  padding: 16px 0;
+}
+
+.metadataGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.labelValuePair {
+  margin-bottom: 12px;
+}
+
+.labelValuePair .label {
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.labelValuePair .value {
+  font-size: 1rem;
+}
+
+.breadcrumb {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.tagContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+} 

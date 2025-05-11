@@ -1,0 +1,44 @@
+.usersContainer {
+  padding: 16px 0;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.avatarContainer {
+  display: flex;
+  align-items: center;
+}
+
+.userDetails {
+  margin-left: 12px;
+}
+
+.userName {
+  font-weight: 600;
+}
+
+.userEmail {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.tableContainer {
+  border-radius: 8px !important;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+}
+
+.statusToggle {
+  margin: 0 !important;
+}
+
+.userVerified {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #666;
+} 

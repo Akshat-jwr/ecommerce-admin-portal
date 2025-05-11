@@ -1,0 +1,40 @@
+.categoriesContainer {
+  padding: 16px 0;
+}
+
+.categoryCard {
+  height: 100%;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 8px !important;
+}
+
+.categoryCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+.categoryDescription {
+  margin-top: 12px !important;
+  color: #666;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 4px;
+}
+
+.emptyState {
+  padding: 40px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 8px !important;
+  min-height: 200px;
+} 

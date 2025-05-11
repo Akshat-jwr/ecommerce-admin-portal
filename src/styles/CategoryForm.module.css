@@ -1,0 +1,35 @@
+.categoryFormContainer {
+  padding: 16px 0;
+}
+
+.formSection {
+  margin-bottom: 24px;
+}
+
+.formSection h6 {
+  margin-bottom: 16px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 32px;
+  gap: 16px;
+}
+
+.formHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.helpText {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.formField {
+  margin-bottom: 16px;
+} 

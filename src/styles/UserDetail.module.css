@@ -1,0 +1,59 @@
+.userDetailContainer {
+  padding: 16px 0;
+}
+
+.userInfoField {
+  margin-bottom: 16px;
+}
+
+.label {
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.value {
+  font-size: 1rem;
+}
+
+.orderIdCell {
+  font-family: monospace;
+  font-weight: 600;
+}
+
+.profileImage {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin: 0 auto 16px;
+  border: 3px solid #f0f0f0;
+}
+
+.roleIcon {
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.statusIndicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.statusActive {
+  background-color: #4caf50;
+}
+
+.statusInactive {
+  background-color: #f44336;
+}
+
+.addressBlock {
+  border-left: 2px solid #f0f0f0;
+  padding-left: 12px;
+  margin-top: 16px;
+} 
