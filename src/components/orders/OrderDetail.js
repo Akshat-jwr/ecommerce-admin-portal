@@ -35,8 +35,8 @@ import {
 import orderService from '../../services/orderService';
 import styles from '../../styles/OrderDetail.module.css';
 
-// Order status workflow
-const ORDER_STATUS_STEPS = ['pending', 'processing', 'shipped', 'delivered'];
+// Order status workflow including 'confirmed'
+const ORDER_STATUS_STEPS = ['pending', 'confirmed', 'processing', 'shipped', 'delivered'];
 
 const OrderDetail = () => {
   const { id } = useParams();
@@ -73,8 +73,9 @@ const OrderDetail = () => {
   // Status chip colors
   const statusColors = {
     pending: 'warning',
-    processing: 'info',
-    shipped: 'primary',
+    confirmed: 'info',
+    processing: 'primary',
+    shipped: 'secondary',
     delivered: 'success',
     cancelled: 'error',
     refunded: 'default'
@@ -177,7 +178,7 @@ const OrderDetail = () => {
             Back
           </Button>
           <Typography variant="h5" component="h1">
-            Order #{order?._id.slice(-8).toUpperCase()}
+            Order {order?.orderNumber}
           </Typography>
         </Box>
         
@@ -210,6 +211,7 @@ const OrderDetail = () => {
               disabled={updatingStatus}
             >
               <MenuItem value="pending">Pending</MenuItem>
+              <MenuItem value="confirmed">Confirmed</MenuItem>
               <MenuItem value="processing">Processing</MenuItem>
               <MenuItem value="shipped">Shipped</MenuItem>
               <MenuItem value="delivered">Delivered</MenuItem>
@@ -255,13 +257,10 @@ const OrderDetail = () => {
             {order?.user ? (
               <Box>
                 <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                  {`${order.user.firstName || ''} ${order.user.lastName || ''}`.trim()}
-                </Typography>
-                <Typography variant="body2">
                   {order.user.email}
                 </Typography>
-                <Typography variant="body2">
-                  {order.user.phone || 'No phone provided'}
+                <Typography variant="caption" color="textSecondary">
+                  User ID: {order.user._id}
                 </Typography>
               </Box>
             ) : (
@@ -385,7 +384,7 @@ const OrderDetail = () => {
               <Box className={styles.paymentRow}>
                 <Typography variant="body2">Payment Method:</Typography>
                 <Typography variant="body2">
-                  {order?.paymentInfo?.method || 'Not specified'}
+                  {order?.paymentInfo?.method?.toUpperCase() || 'Not specified'}
                 </Typography>
               </Box>
               
@@ -398,11 +397,17 @@ const OrderDetail = () => {
                 />
               </Box>
               
-              {order?.paymentInfo?.paymentId && (
+              <Box className={styles.paymentRow}>
+                <Typography variant="body2">Payment ID:</Typography>
+                <Typography variant="body2" className={styles.paymentId}>
+                  {order.paymentInfo.paymentId}
+                </Typography>
+              </Box>
+              {order.paymentInfo.transactionId && (
                 <Box className={styles.paymentRow}>
-                  <Typography variant="body2">Payment ID:</Typography>
+                  <Typography variant="body2">Transaction ID:</Typography>
                   <Typography variant="body2" className={styles.paymentId}>
-                    {order.paymentInfo.paymentId}
+                    {order.paymentInfo.transactionId}
                   </Typography>
                 </Box>
               )}
