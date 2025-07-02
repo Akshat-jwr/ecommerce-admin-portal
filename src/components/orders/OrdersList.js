@@ -81,9 +81,9 @@ const OrdersList = () => {
   const fetchOrders = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await orderService.getAllOrders(page + 1, rowsPerPage, statusFilter, searchQuery);
-      // API returns data.orders and data.pagination.total
-      const { orders: fetchedOrders = [], pagination = {} } = response.data;
+      const wrapper = await orderService.getAllOrders(page + 1, rowsPerPage, statusFilter, searchQuery);
+      // wrapper: { statusCode, data: { orders, pagination }, message, success }
+      const { orders: fetchedOrders = [], pagination = {} } = wrapper.data;
       setOrders(fetchedOrders);
       setTotalOrders(pagination.total || 0);
       setError('');
