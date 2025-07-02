@@ -22,8 +22,7 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow,
-  Snackbar
+  TableRow
 } from '@mui/material';
 import {
   ArrowBack as BackIcon,
@@ -35,8 +34,8 @@ import {
 import orderService from '../../services/orderService';
 import styles from '../../styles/OrderDetail.module.css';
 
-// Order status workflow including 'confirmed'
-const ORDER_STATUS_STEPS = ['pending', 'confirmed', 'processing', 'shipped', 'delivered'];
+// Order status workflow
+const ORDER_STATUS_STEPS = ['pending', 'processing', 'shipped', 'delivered'];
 
 const OrderDetail = () => {
   const { id } = useParams();
@@ -47,8 +46,6 @@ const OrderDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [updatingStatus, setUpdatingStatus] = useState(false);
-  // Snackbar for status updates
-  const [snack, setSnack] = useState({ open: false, message: '', severity: 'success' });
   
   // Fetch order on component mount
   useEffect(() => {
@@ -56,8 +53,7 @@ const OrderDetail = () => {
       setLoading(true);
       try {
         const response = await orderService.getOrderById(id);
-        // API returns ApiResponse: { data: order }
-        setOrder(response.data.data);
+        setOrder(response.data);
         setError('');
       } catch (err) {
         console.error('Error fetching order:', err);
@@ -73,9 +69,8 @@ const OrderDetail = () => {
   // Status chip colors
   const statusColors = {
     pending: 'warning',
-    confirmed: 'info',
-    processing: 'primary',
-    shipped: 'secondary',
+    processing: 'info',
+    shipped: 'primary',
     delivered: 'success',
     cancelled: 'error',
     refunded: 'default'
@@ -114,13 +109,10 @@ const OrderDetail = () => {
     
     try {
       const response = await orderService.updateOrderStatus(id, newStatus);
-      // Update with nested data
-      setOrder(response.data.data);
-      setSnack({ open: true, message: 'Status updated successfully', severity: 'success' });
+      setOrder(response.data);
     } catch (err) {
       console.error('Error updating order status:', err);
       setError('Failed to update order status. Please try again.');
-      setSnack({ open: true, message: 'Failed to update status', severity: 'error' });
     } finally {
       setUpdatingStatus(false);
     }
@@ -153,20 +145,6 @@ const OrderDetail = () => {
   
   return (
     <div className={styles.orderDetailContainer}>
-      {/* Snackbar for status updates */}
-      <Snackbar
-        open={snack.open}
-        autoHideDuration={3000}
-        onClose={() => setSnack({ ...snack, open: false })}
-      >
-        <Alert
-          onClose={() => setSnack({ ...snack, open: false })}
-          severity={snack.severity}
-          sx={{ width: '100%' }}
-        >
-          {snack.message}
-        </Alert>
-      </Snackbar>
       {/* Header */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
         <Box display="flex" alignItems="center">
@@ -178,7 +156,7 @@ const OrderDetail = () => {
             Back
           </Button>
           <Typography variant="h5" component="h1">
-            Order {order?.orderNumber}
+            Order #{order?._id.slice(-8).toUpperCase()}
           </Typography>
         </Box>
         
@@ -211,7 +189,6 @@ const OrderDetail = () => {
               disabled={updatingStatus}
             >
               <MenuItem value="pending">Pending</MenuItem>
-              <MenuItem value="confirmed">Confirmed</MenuItem>
               <MenuItem value="processing">Processing</MenuItem>
               <MenuItem value="shipped">Shipped</MenuItem>
               <MenuItem value="delivered">Delivered</MenuItem>
@@ -257,10 +234,13 @@ const OrderDetail = () => {
             {order?.user ? (
               <Box>
                 <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                  {order.user.name}
+                </Typography>
+                <Typography variant="body2">
                   {order.user.email}
                 </Typography>
-                <Typography variant="caption" color="textSecondary">
-                  User ID: {order.user._id}
+                <Typography variant="body2">
+                  {order.user.phone || 'No phone provided'}
                 </Typography>
               </Box>
             ) : (
@@ -384,7 +364,7 @@ const OrderDetail = () => {
               <Box className={styles.paymentRow}>
                 <Typography variant="body2">Payment Method:</Typography>
                 <Typography variant="body2">
-                  {order?.paymentInfo?.method?.toUpperCase() || 'Not specified'}
+                  {order?.paymentMethod || 'Not specified'}
                 </Typography>
               </Box>
               
@@ -392,22 +372,16 @@ const OrderDetail = () => {
                 <Typography variant="body2">Payment Status:</Typography>
                 <Chip 
                   size="small"
-                  label={order?.paymentInfo?.status?.charAt(0).toUpperCase() + order?.paymentInfo?.status?.slice(1) || 'Unknown'}
-                  color={order?.paymentInfo?.status === 'completed' ? 'success' : 'warning'}
+                  label={order?.paymentStatus || 'Unknown'}
+                  color={order?.paymentStatus === 'paid' ? 'success' : 'warning'}
                 />
               </Box>
               
-              <Box className={styles.paymentRow}>
-                <Typography variant="body2">Payment ID:</Typography>
-                <Typography variant="body2" className={styles.paymentId}>
-                  {order.paymentInfo.paymentId}
-                </Typography>
-              </Box>
-              {order.paymentInfo.transactionId && (
+              {order?.paymentId && (
                 <Box className={styles.paymentRow}>
-                  <Typography variant="body2">Transaction ID:</Typography>
+                  <Typography variant="body2">Payment ID:</Typography>
                   <Typography variant="body2" className={styles.paymentId}>
-                    {order.paymentInfo.transactionId}
+                    {order.paymentId}
                   </Typography>
                 </Box>
               )}
@@ -434,7 +408,7 @@ const OrderDetail = () => {
             <Box className={styles.summaryRow}>
               <Typography variant="body2">Shipping:</Typography>
               <Typography variant="body2">
-                {formatCurrency(order?.shipping || 0)}
+                {formatCurrency(order?.shippingCost || 0)}
               </Typography>
             </Box>
             
@@ -459,7 +433,7 @@ const OrderDetail = () => {
                 Total:
               </Typography>
               <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
-                {formatCurrency(order?.total || 0)}
+                {formatCurrency(order?.totalAmount || 0)}
               </Typography>
             </Box>
           </Paper>
@@ -469,4 +443,4 @@ const OrderDetail = () => {
   );
 };
 
-export default OrderDetail;
+export default OrderDetail; 
