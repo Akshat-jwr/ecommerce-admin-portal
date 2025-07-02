@@ -2,12 +2,11 @@ import api from './api';
 
 const orderService = {
   // Get all orders with pagination
-  getAllOrders: async (page = 1, limit = 10, status = null) => {
+  getAllOrders: async (page = 1, limit = 10, status = null, search = '') => {
     try {
       let url = `/admin/orders?page=${page}&limit=${limit}`;
-      if (status) {
-        url += `&status=${status}`;
-      }
+      if (status) url += `&status=${status}`;
+      if (search) url += `&search=${encodeURIComponent(search)}`;
       const response = await api.get(url);
       return response.data;
     } catch (error) {
@@ -46,4 +45,4 @@ const orderService = {
   },
 };
 
-export default orderService; 
+export default orderService;
